@@ -10,7 +10,7 @@ Maintainer: Yanming Di <diy@stat.oregonstate.edu>
 Description: Negative Binomial (NB) models for two-group comparisons and
     regression inferences from RNA-Sequencing Data.
 Depends:
-    R (>= 3.00)
+    R (>= 3.0.0)
 Imports:
     splines,
     qvalue
