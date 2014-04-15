@@ -1,0 +1,23 @@
+##'  ## Load Arabidopsis data
+##'  data(arab);
+##'
+##'  ## Specify treatment groups
+##'  grp.ids = c(1, 1, 1, 2, 2, 2);
+##'
+##'  ## Prepare an NBP object, adjust the library sizes by thinning the counts.
+##'  set.seed(999);
+##'
+##'  ## For demonstration purpose, only use the first 100 rows of the arab data.
+##'  obj = prepare.nbp(arab[1:100,], lib.size=colSums(arab), grp.ids, print.level=5);
+##'
+##'  ## Estimate the NBP dispersion parameters
+##'  obj = estimate.disp(obj, print.level=5);
+##'  
+##'  ## Perform exact NB test
+##'  grp1 = 1;
+##'  grp2 = 2;
+##'  obj = exact.nb.test(obj, grp1, grp2, print.level=5);
+##'
+##'  ## Print the NBP object
+##'  print(obj);
+##'

@@ -1,0 +1,26 @@
+\name{plot.nbp}
+\alias{plot.nbp}
+\title{Diagnostic Plots for an NBP Object}
+\usage{
+\method{plot}{nbp}(x, ...)
+}
+\arguments{
+  \item{x}{output from \code{\link{nbp.test}}.}
+
+  \item{\dots}{for future use}
+}
+\description{
+For output from \code{\link{nbp.test}}, produce a boxplot,
+an MA plot, mean-variance plots (one for each group being
+compared), and mean-dispersion plots (one for each group
+being compared). On the mean-variance and the
+mean-dispersion plots, overlay curves corresponding to the
+estimated NBP model.
+}
+\examples{
+## See the example for nbp.test
+}
+\seealso{
+\code{\link{nbp.test}}
+}
+

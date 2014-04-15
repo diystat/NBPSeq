@@ -1,0 +1,30 @@
+library(devtools);
+path= "../../";
+load_all(path);
+
+## Load Arabidopsis data
+data(arab);
+
+## Specify treatment structure
+grp.ids = as.factor(c(1, 1, 1, 2, 2, 2));
+x = model.matrix(~grp.ids);
+
+## Specify the null hypothesis
+## The null hypothesis is beta[1]=0 (beta[1] is the log fold change).
+beta0 = c(NA, 0);
+
+## Fit NB regression model and perform large sample tests.
+## The step can take long if the number of genes is large
+fit = nb.glm.test(counts, x, beta0, subset=1:100);
+
+## The result contains the data, the dispersion estimates and the test results
+print(str(fit));
+
+## Show top ten most differentially expressed genes
+subset = order(fit$test.results$HOA$p.values)[1:10];
+
+cbind(counts[subset,],
+      HOA=fit$test.results$HOA$p.values[subset],
+      LR=fit$test.results$LR$p.values[subset],
+      Wald=fit$test.results$Wald$p.values[subset]
+      );
