@@ -1,8 +1,8 @@
-##' Negative binomial (NB) two-group and regression models for
-##' RNA-Sequencing data analysis. 
+##' Two-group comparisons and regression inferences from
+##' RNA-Sequencing data using negative binomial (NB) models.
 ##'
-##' See the examples of \code{\link{test.coefficient}} and
-##' \code{\link{exact.nb.test}} for typical workflows of using this package.
+##' See the examples of \code{test.coefficient} and
+##' \code{exact.nb.test} for typical workflows of using this package.
 ##'
 ##' @name NBPSeq-package
 ##' @aliases NBPSeq
@@ -10,7 +10,6 @@
 ##' @title Negative Binomial Regression Models for Statistical Analysis of RNA-Sequencing Data
 ##'
 ##' @useDynLib NBPSeq Cdqrls
-##' @importFrom qvalue qvalue
 NULL
 ### @exportPattern "^[^\\.]" 
 
