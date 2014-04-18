@@ -1,0 +1,24 @@
+\name{get.nbp.pars}
+\alias{get.nbp.pars}
+\title{(private) Retrieve nbp parameters for one of the treatment groups from an nbp object}
+\usage{
+get.nbp.pars(obj, grp.id)
+}
+\arguments{
+  \item{obj}{output form nbp.mcle}
+
+  \item{grp.id}{the id of a treatment grp}
+}
+\value{
+a list
+
+\item{n}{number of genes} \item{r}{number of replicates}
+\item{lib.sizes}{library sizes} \item{pie}{estimated mean
+relatiev frequenices} \item{phi, alpha}{dispersion model
+parameters}
+}
+\description{
+(private) Retrieve nbp parameters for one of the treatment
+groups from an nbp object
+}
+

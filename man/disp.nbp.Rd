@@ -1,0 +1,62 @@
+\name{disp.nbp}
+\alias{disp.nbp}
+\title{(private) Specify a NBP dispersion model}
+\usage{
+disp.nbp(counts, eff.lib.sizes, x, phi.pre = 0.1, mu.lower = 1,
+  mu.upper = Inf)
+}
+\arguments{
+  \item{counts}{an \eqn{m \times n} matrix of NB counts}
+
+  \item{eff.lib.sizes}{a \eqn{n}-vector of estimated
+  effective library sizes}
+
+  \item{x}{a nxp matrix, design matrix (specifying the
+  treatment structure)}
+
+  \item{phi.pre}{a number, a preliminary constant
+  dispersion value, will be used to get preliminary
+  estimates of mean counts (mu.pre).}
+
+  \item{mu.lower}{a number, rows with any component of
+  mu.pre < mu.lower will not be used for estimating the
+  dispersion model}
+
+  \item{mu.upper}{a number, rows with any component of
+  mu.pre > mu.upper will not be used for estimating the
+  dispersion model}
+}
+\value{
+a list
+
+\item{fun}{a function that takes a vector, par, as input
+and outputs a matrix of dispersion values (same dimension
+as counts)} \item{par.init}{a numeric vector of length 2,
+initial values of par} \item{lower}{a numeric vector of
+length 2, lower bounds of the parameter values}
+\item{upper}{a numeric vector of length 2, upper bounds of
+the parameter values} \item{subset}{a logical vector of
+length \eqn{m}, specifying the subset of rows to be used
+when estimating the dispersion model parameters.}
+\item{pi.pre}{a m by n matrix, preliminary estimates of the
+relative frequencies.} \item{pi.offset}{a scalar, fixed to
+be 1e-4, an offset used in the NBP model (see Details)}
+}
+\description{
+Specify a NBP dispersion model. The parameters of the
+specified model are to be estimated from the data using the
+function \code{optim.disp.apl} or \code{optim.disp.pl}.
+}
+\details{
+Under this NBP model, the log dispersion is modeled as a
+linear function of the preliminary estimates of the log
+mean realtive frequencies (\code{pi.pre}):
+
+log(phi) = par[1] + par[2] * log(pi.pre/pi.offset),
+
+where \code{pi.offset} is 1e-4.
+
+Under this parameterization, par[1] is the dispersion value
+when the estimated relative frequency is 1e-4 (or 100 RPM).
+}
+

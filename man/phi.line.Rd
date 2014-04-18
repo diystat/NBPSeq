@@ -1,0 +1,33 @@
+\name{phi.line}
+\alias{phi.line}
+\title{(private) Overlay an mean-dispersion line on an esimtated plot}
+\usage{
+phi.line(mu, v, alpha = 2, ...)
+}
+\arguments{
+  \item{mu}{a vector of mean values}
+
+  \item{v}{a vector of variance values}
+
+  \item{alpha}{alpha}
+
+  \item{...}{other}
+}
+\description{
+Users should call vmr.plot before calling this function.
+}
+\details{
+If the length of theinput vectors (\code{mu}, \code{v}) is
+greater than 1000, then we will only use a subset of the
+input vectors.
+
+The dispersion is computed from the mean \code{mu} and the
+variance \code{v}, using \eqn{\phi = (v - \mu) /
+\mu^alpha}, where \code{alpha=2} by default.
+}
+\note{
+Currently, we discards genes giving 0 mean or negative
+dispersion estimate (which can happen if sample variance is
+smaller than the sample mean).
+}
+

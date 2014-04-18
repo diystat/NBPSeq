@@ -1,0 +1,33 @@
+\name{phi.line.nbp}
+\alias{phi.line.nbp}
+\title{(private) Overlay an estimated mean-dispersion line on an existing plot}
+\usage{
+phi.line.nbp(nbp.obj, grp.id, alpha = 2, ...)
+}
+\arguments{
+  \item{nbp.obj}{output from nbp.test or prepare.nbp}
+
+  \item{grp.id}{a number, indicates the group of counts to
+  be used (grp.id is passed to \code{\link{get.mean.hat}})}
+
+  \item{alpha}{alpha}
+
+  \item{...}{other}
+}
+\description{
+Overlay an estimated mean-dispersion line on an existing
+plot
+}
+\details{
+This function extracts the estimated means and variances
+from an \code{nbp} object and then call
+\code{\link{phi.line}} to draw the mean-dispersion curve
+}
+\note{
+Users should call phi.plot before calling this function.
+}
+\seealso{
+\code{\link{prepare.nbp}}, \code{\link{nbp.test}},
+\code{\link{phi.line}}
+}
+

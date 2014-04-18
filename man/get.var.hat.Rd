@@ -1,0 +1,17 @@
+\name{get.var.hat}
+\alias{get.var.hat}
+\title{(private) Extract estimated variance from the oupput of
+\code{nbp-mcle} or \code{nbp-test}}
+\usage{
+get.var.hat(obj, grp.id)
+}
+\arguments{
+  \item{obj}{a list, output from nbp-mcle or nbp-test}
+
+  \item{grp.id}{a number, group id}
+}
+\description{
+(private) Extract estimated variance from the oupput of
+\code{nbp-mcle} or \code{nbp-test}
+}
+

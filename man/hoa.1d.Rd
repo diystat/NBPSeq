@@ -1,0 +1,34 @@
+\name{hoa.1d}
+\alias{hoa.1d}
+\title{(private) One-dimensional HOA test for a regression coefficient in an NB GLM model}
+\usage{
+hoa.1d(y, s, x, phi, beta0, tol.mu = 0.001/length(y),
+  alternative = "two.sided", print.level = 1)
+}
+\arguments{
+  \item{y}{an n vector of counts}
+
+  \item{s}{an n vector of effective library sizes}
+
+  \item{x}{an n by p design matrix}
+
+  \item{phi}{an n vector of dispersion parameters}
+
+  \item{beta0}{a p vector specifying null hypothesis: non
+  NA components are hypothesized values of beta, NA
+  components are free components}
+
+  \item{tol.mu}{convergence criteria}
+
+  \item{alternative}{"less" means phi < 0.}
+
+  \item{print.level}{a number, print level}
+}
+\value{
+test statistics and p-values of HOA, LR, and Wald tests
+}
+\description{
+(private) One-dimensional HOA test for a regression
+coefficient in an NB GLM model
+}
+

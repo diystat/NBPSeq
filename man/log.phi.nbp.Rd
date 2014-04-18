@@ -1,0 +1,33 @@
+\name{log.phi.nbp}
+\alias{log.phi.nbp}
+\title{(private) A NBP dispersion model}
+\usage{
+\method{log}{phi.nbp}(par, pi, pi.offset = 1e-04)
+}
+\arguments{
+  \item{par}{a vector of length 2, the intercept and the
+  slope of the log linear model (see Details).}
+
+  \item{pi}{a vector of length m, estimated mean relative
+  frequencies}
+
+  \item{pi.offset}{a number}
+}
+\value{
+a vector of length m, log dipserison.
+}
+\description{
+Specify a NBP dispersion model. The parameters of the
+specified model are to be estimated from the data using the
+function \code{optim.pcl}.
+}
+\details{
+Under this NBP model, the log dispersion is modeled as a
+linear function of the log mean realtive frequencies
+(\code{pi.pre}):
+
+log(phi) = par[1] + par[2] * log(pi.pre/pi.offset),
+
+where the default value of \code{pi.offset} is 1e-4.
+}
+

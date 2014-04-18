@@ -1,0 +1,31 @@
+\name{mv.line.nbp}
+\alias{mv.line.nbp}
+\title{(private) Overlay a NBP mean-variance line on an existing plot}
+\usage{
+mv.line.nbp(nbp.obj, grp.id, ...)
+}
+\arguments{
+  \item{nbp.obj}{output from nbp.test or prepare.nbp}
+
+  \item{grp.id}{a number, indicates the group of counts to
+  be used (grp.id is passed to \code{\link{get.mean.hat}}}
+
+  \item{...}{other parameters}
+}
+\description{
+Overlay an estimated mean-variance line on existing plot
+}
+\details{
+This function extracts the estimated means and variances
+from an \code{nbp} object and then call
+\code{\link{mv.line}} to draw the mean-variance line on an
+existing plot
+}
+\note{
+Users should call mv.plot before calling this function.
+}
+\seealso{
+\code{\link{prepare.nbp}}, \code{\link{nbp.test}},
+\code{\link{mv.line}}
+}
+

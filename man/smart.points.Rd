@@ -1,0 +1,30 @@
+\name{smart.points}
+\alias{smart.points}
+\title{(private) An alternative to point.default() for plotting a large number of
+densely distributed points.}
+\usage{
+smart.points(x, y = NULL, resolution = 50, col = NULL, clip = Inf,
+  color.clipped = TRUE, ...)
+}
+\arguments{
+  \item{x}{x}
+
+  \item{y}{y}
+
+  \item{resolution}{a number, determines the distance below
+  which points will be considered as overlapping.}
+
+  \item{col}{color}
+
+  \item{clip}{clip}
+
+  \item{color.clipped}{color of clipped points}
+
+  \item{...}{other arguments are the same as in
+  plot.default().}
+}
+\description{
+See description of \code{\link{smart.plot}} for more
+details.
+}
+

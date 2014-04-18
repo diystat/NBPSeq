@@ -1,0 +1,27 @@
+\name{mv.plot}
+\alias{mv.plot}
+\title{(private) Mean-variance plot}
+\usage{
+mv.plot(counts, xlab = "mean", ylab = "variance",
+  main = "variance vs mean", log = "xy", ...)
+}
+\arguments{
+  \item{counts}{a matrix of NB counts}
+
+  \item{xlab}{x label}
+
+  \item{ylab}{y label}
+
+  \item{main}{main, same as in plot}
+
+  \item{log}{same as in plot}
+
+  \item{...}{same as in plot}
+}
+\description{
+Mean-variance plot.
+}
+\details{
+Rows with mean 0 or variance 0 will not be plotted.
+}
+

@@ -12,8 +12,8 @@
 ##' @useDynLib NBPSeq Cdqrls
 ##' @importFrom qvalue qvalue
 ##' @importFrom splines ns
+##' @exportPattern "^[^\\.]" 
 NULL
-### @exportPattern "^[^\\.]" 
 
 ##' An RNA-Seq dataset from a pilot study of the defense response  of
 ##' Arabidopsis to infection by bacteria. We performed RNA-Seq
