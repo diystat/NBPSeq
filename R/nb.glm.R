@@ -153,7 +153,10 @@ irls.nb.1 = function(y, s, x, phi,
 ##' @param ...  other parameters 
 ##' @param print.level a number, print level
 ##' @return beta a K vector, the MLE of the regression coefficients.
-irls.nb = function(y, s, x, phi, beta0, mustart=NULL, ..., print.level=0) {
+irls.nb = function(y, s, x, phi,
+  beta0=rep(NA,ncol(x)),
+  mustart=NULL, ..., print.level=0) {
+
   m = dim(y)[1];
   n = dim(y)[2];
   p = dim(x)[2];

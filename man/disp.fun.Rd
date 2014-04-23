@@ -1,0 +1,88 @@
+\name{Dispersion Models}
+\alias{Dispersion Models}
+\alias{disp.fun.nbp}
+\alias{disp.fun.nbq}
+\alias{disp.fun.nbs}
+\alias{disp.fun.step}
+\title{(private) Specify a NB2, NBP, NBS, NBS, or STEP dispersion model}
+\usage{
+disp.fun.nb2(predictor, subset, offset = NULL,
+  predictor.label = "Predictor", par.init = -1)
+
+disp.fun.nbp(predictor, subset, offset = median(predictor[subset, ]),
+  predictor.label = "Predictor", par.init = c(log(0.1), 0),
+  par.lower = c(log(1e-20), -1.1), par.upper = c(0, 0.1))
+
+disp.fun.nbq(predictor, subset, offset = median(predictor[subset, ]),
+  predictor.label = "Predictor", par.init = c(log(0.1), 0, 0),
+  par.lower = c(log(1e-20), -1, -0.2), par.upper = c(0, 1, 0.2))
+
+disp.fun.nbs(predictor, subset, offset = NULL,
+  predictor.label = "Predictor", df = 6, par.init = rep(-1, df))
+
+disp.fun.step(predictor, subset, offset = NULL,
+  predictor.label = "Predictor", df = 6, knots = NULL,
+  par.init = rep(-1, df))
+}
+\arguments{
+  \item{predictor}{a m-by-n matrix having the same
+  dimensions as the NB counts, predictor of the dispersion.
+  See Details.}
+
+  \item{subset}{a logical vector of length \eqn{m},
+  specifying the subset of rows to be used when estimating
+  the dispersion model parameters.}
+
+  \item{offset}{a scalar offset.}
+
+  \item{predictor.label}{a string describing the predictor}
+
+  \item{par.init}{a numeric vector, initial values of par.}
+
+  \item{label}{a string character describing the
+  predictor.}
+
+  \item{par.lower}{a numeric vector, lower bounds of the
+  parameter values.}
+
+  \item{par.upper}{a numeric vector, upper bounds of the
+  parameter values.}
+}
+\value{
+a list \item{fun}{a function that takes a vector,
+\code{par}, as input and outputs a matrix of dispersion
+values (same dimension as counts)} \item{par.init,
+par.lower, par.upper}{same as input} \item{subset}{same as
+input} \item{predictor, offset, predictor.lable}{same as
+input}
+}
+\description{
+(private) Specify a NB2, NBP, NBS, NBS, or STEP dispersion
+model
+}
+\details{
+Specify a NBP dispersion model. The parameters of the
+specified model are to be estimated from the data using the
+function \code{optim.disp.apl} or \code{optim.disp.pl}.
+
+Under the NBP model, the log dispersion is modeled as a
+linear function of specified predictor with a scalar
+offset,
+
+log(phi) = par[1] + par[2] * log(predictor/offset).
+
+Under this parameterization, par[1] is the dispersion value
+when the value of predictor equals the offset. This
+function will return a function (and related settings) to
+be estimated by either \code{optim.disp.apl} or
+\code{optim.disp.pl}.  The logical vector \code{subset}
+specifieds which rows will be used when estimating the
+paramters (\code{par}) of the dispersion model.
+
+Once estimated, the dispersion function will be applied to
+all values of the \code{predictor} matrix. Care needs to be
+taken to either avoid \code{NA/Inf} values when preparing
+the predictor matrix or handle \code{NA/Inf} values
+afterwards (e.g., when performing hypothesis tests).
+}
+

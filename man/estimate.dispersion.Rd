@@ -2,7 +2,8 @@
 \alias{estimate.dispersion}
 \title{Estimate Negative Binomial Dispersion}
 \usage{
-estimate.dispersion(nb.data, x, model = "NBQ", method = "MAPL", ...)
+estimate.dispersion(nb.data, x, model = "NBQ", predictor = "pi",
+  method = "MAPL", ...)
 }
 \arguments{
   \item{nb.data}{output from

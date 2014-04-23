@@ -173,8 +173,11 @@ prepare.nb.data = function(counts,
 ##' @param nb.data output from \code{\link{prepare.nb.data}}.
 ##' @param x a design matrix specifying the mean structure of each row.
 ##' @param model the name of the dispersion model, one of "NB2", "NBP", "NBQ" (default), "NBS" or "step".
+##' @param predictor 
 ##' @param method a character string specifying the method for estimating the dispersion model, one of "ML" or "MAPL" (default).
-##' @param ... (for future use).
+##' @param fast use a faster (but might be less accurate method)
+##' @param make.disp.par  a list, additional parameter to \code{\list{make.disp}}
+##' @param ... additional parameters to optim.fun.<method>
 ##' @return a list with following components:
 ##' \item{estimates}{dispersion estimates for each read count, a matrix of the same dimensions as
 ##' the \code{counts} matrix in \code{nb.data}.}
@@ -187,7 +190,8 @@ prepare.nb.data = function(counts,
 ##' model is fitted to each gene separately without considering the
 ##' dispersion-mean dependence. Clarifying the power-robustness of the
 ##' dispersion-modeling approach is an ongoing research topic.
-estimate.dispersion = function(nb.data, x, model="NBQ", method="MAPL", ...) {
+estimate.dispersion = function(nb.data, x, model="NBQ", predictor="pi", method="MAPL",
+    fast=TRUE, ...) {
 
   ## Specify the function to be used for estimating the dispersion
   ## model parameters
@@ -200,27 +204,22 @@ estimate.dispersion = function(nb.data, x, model="NBQ", method="MAPL", ...) {
   } else {
     stop('method should be "MAPL" or "ML".');
   }
+
+  ## disp = do.call(make.disp, c(list(nb=nb.data, x=x, model=model, predictor=predictor), make.disp.par));
+  disp = make.disp(nb.data, x, model, predictor);
  
-  if (model=="NBP") {
-    disp = disp.nbp(nb.data$counts, nb.data$eff.lib.sizes, x);
+  if (fast) {
+      res = optim.fun(disp, nb.data$counts, nb.data$eff.lib.sizes, x, fast=TRUE, ...);
+      mustart = irls.nb(nb.data$counts, nb.data$eff.lib.sizes, x, phi = disp$fun(res$par))$mu;
+      par.init.old = disp$par.init;
+      disp$par.init = res$par;
+      res = optim.fun(disp, nb.data$counts, nb.data$eff.lib.sizes, x, mustart=mustart, fast=TRUE, ...);
 
-    ## obj = list(estimates = phi, model=model, method=method, fun=disp$fun, par=res$par, z=disp$z, likelihood=-res$value);
-  } else if (model=="NBQ") {
-    disp = disp.nbq(nb.data$counts, nb.data$eff.lib.sizes, x);
-
-    ## obj = list(estimates = phi, model=model, method=method, fun=disp$fun, par=res$par, z=disp$z, likelihood=-res$value);
-  } else if (model=="NBS") {
-    disp = disp.nbs(nb.data$counts, nb.data$eff.lib.sizes, x, df=6);
-    ## obj = list(estimates = phi, model=model, method=method, fun=disp$fun, par=res$par, likelihood=-res$value);
-  } else if (model=="NB2") {
-    disp = disp.step(nb.data$counts, nb.data$eff.lib.sizes, x, df=1);
-  } else if (model=="step") {
-    disp = disp.step(nb.data$counts, nb.data$eff.lib.sizes, x);
+      ## Is this needed?
+      ## disp$par.init = par.init.old;
   } else {
-    stop('model should be "NBP", "NBQ", "NBS", "NB2" or "step".');
+      res = optim.fun(disp, nb.data$counts, nb.data$eff.lib.sizes, x, ...);
   }
-
-  res = optim.fun(disp, nb.data$counts, nb.data$eff.lib.sizes, x, ...);
 
   ##  model = c(disp, res);
   ## class(model) = "dispersion.model";
@@ -232,6 +231,54 @@ estimate.dispersion = function(nb.data, x, model="NBQ", method="MAPL", ...) {
   obj
 }
 
+estimate.dispersion.by.group = function(nb.data, 
+    grp.ids = rep(1, ncol(nb.data$counts)), 
+    x = model.matrix(~grp.ids),
+    model="NBQ", predictor="pi", method="MAPL", 
+    fast=TRUE, ...) {
+
+    ## Specify the function to be used for estimating the dispersion
+    ## model parameters
+    if (method == "MAPL") {
+        ## Maximum adjusted profile likelihood (MAPL)
+        optim.fun = optim.disp.apl
+    } else if (method == "ML") {
+        ## Maximum likelihood (ML)
+        optim.fun = optim.disp.pl
+    } else {
+        stop('method should be "MAPL" or "ML".');
+    }
+
+    disp.fun = paste("disp.fun", tolower(model), sep=".");
+
+    par.list = c(list(disp.fun=disp.fun, grp.ids = grp.ids), disp.predictor.pi(nb.data, x));
+
+    disp = do.call(disp.by.group, par.list);
+ 
+  if (fast) {
+      res = optim.fun(disp, nb.data$counts, nb.data$eff.lib.sizes, x, fast=TRUE, ...);
+      mustart = irls.nb(nb.data$counts, nb.data$eff.lib.sizes, x, phi = disp$fun(res$par))$mu;
+      par.init.old = disp$par.init;
+      disp$par.init = res$par;
+      res = optim.fun(disp, nb.data$counts, nb.data$eff.lib.sizes, x, mustart=mustart, fast=TRUE, ...);
+
+      ## Is this needed?
+      ## disp$par.init = par.init.old;
+  } else {
+      res = optim.fun(disp, nb.data$counts, nb.data$eff.lib.sizes, x, ...);
+  }
+
+  ##  model = c(disp, res);
+  ## class(model) = "dispersion.model";
+
+  obj = list(estimates = disp$fun(res$par), likelihood=-res$value, model= c(disp, res));
+  class(obj) = "nb.dispersion";
+
+  ## res = estimate.disp.mapl.nbp(nb.data$counts, nb.data$eff.lib.sizes, x, ...);
+  obj
+}
+
+
 ##' @title Plot the estimated dispersion as a function of the
 ##' preliminarily estimated mean relative frequencies
 ##' @export
@@ -239,7 +286,14 @@ estimate.dispersion = function(nb.data, x, model="NBQ", method="MAPL", ...) {
 ##' @param ... additional parameters, currently unused
 ##' @return NULL
 plot.nb.dispersion = function(x, ...) {
-  plot(x$model$pi.pre, x$estimates, log="xy", xlab="Preliminary Estimates of Mean Relative Frequencies",
+
+  xlab = switch(x$model$predictor.label,
+      "pi.pre"="Preliminary Estiamtes of Mean Relative Frequencies",
+      "mu.pre"="Preliminary Estiamtes of Mean Frequencies",
+      "row sum"="Row Sums",
+      x$model$predictor.label);
+
+  matplot(x$model$predictor, x$estimates, log="xy", xlab=xlab,
        ylab ="Estiamted Dispersion");
   invisible();
 }
@@ -255,7 +309,7 @@ print.nb.dispersion = function(x, ...) {
   
   model = x$model;
 
-  model$pi.pre = NULL;
+  model$predictor = NULL;
   model$subset = NULL;
   print.default(model);
 
