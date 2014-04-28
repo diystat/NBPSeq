@@ -2,8 +2,8 @@
 \alias{prepare.nb.data}
 \title{Prepare the NB Data Structure for RNA-Seq Read Counts}
 \usage{
-prepare.nb.data(counts, lib.sizes = colSums(counts), norm.factors = rep(1,
-  dim(counts)[2]), tags = NULL)
+prepare.nb.data(counts, lib.sizes = colSums(counts),
+  norm.factors = estimate.norm.factors(counts), tags = NULL)
 }
 \arguments{
   \item{counts}{an mxn matrix of RNA-Seq read counts with

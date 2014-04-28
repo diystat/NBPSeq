@@ -1,0 +1,29 @@
+\name{disp.by.group}
+\alias{disp.by.group}
+\title{Specify a dispersion model where the parameters of the
+model will be estimated separately for different groups}
+\usage{
+disp.by.group(disp.fun, grp.ids, predictor, subset,
+  predictor.label = "Predictor", ...)
+}
+\arguments{
+  \item{disp.fun}{}
+
+  \item{grp.ids}{}
+
+  \item{predictor}{}
+
+  \item{subset}{}
+
+  \item{predictor.label}{}
+
+  \item{...}{}
+}
+\value{
+a list,
+}
+\description{
+Specify a dispersion model where the parameters of the
+model will be estimated separately for different groups
+}
+

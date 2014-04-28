@@ -18,16 +18,6 @@
   y
 }
 
-if (FALSE) {
-nb[1:10,1:3];
-nb[1:10,4:6];
-data(arab);
-nb = prepare.nb.data(arab);
-class(nb) = "nb.data";
-str(nb);
-}
-
-
 ##' @title Print summary of the nb counts
 ##' @param x output from \code{\link{prepare.nb.data}}
 ##' @param ... additional parameters, currently not used
@@ -50,4 +40,3 @@ print.nb.data = function(x, ...) {
 
   invisible();
 }
-

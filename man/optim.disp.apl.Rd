@@ -3,7 +3,7 @@
 \title{(private) Estimate the parameters in a dispersion model}
 \usage{
 optim.disp.apl(disp, counts, eff.lib.sizes, x, method = "L-BFGS-B",
-  print.level = 1, ...)
+  mustart = NULL, fast = FALSE, print.level = 1, ...)
 }
 \arguments{
   \item{disp}{a list, output from \code{\link{disp.nbp}},
@@ -19,6 +19,12 @@ optim.disp.apl(disp, counts, eff.lib.sizes, x, method = "L-BFGS-B",
   \code{optim}}
 
   \item{print.level}{print level}
+
+  \item{mustart}{a matrix of the same dimension as
+  \code{counts}, starting values of mu}
+
+  \item{fast}{logical, if \code{TRUE} will use a faster
+  (but less accurate) method}
 
   \item{...}{additional parareters, will be passed to
   optim().}

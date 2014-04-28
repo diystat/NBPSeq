@@ -12,7 +12,6 @@ Description: Negative Binomial (NB) models for two-group comparisons and
 Depends:
     R (>= 3.0.0)
 Imports:
-    splines,
-    qvalue
+    splines
 License: GPL-2
 LazyLoad: yes

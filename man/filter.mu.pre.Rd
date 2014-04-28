@@ -1,0 +1,24 @@
+\name{filter.mu.pre}
+\alias{filter.mu.pre}
+\title{Create a logical vector specifyfing the subset of rows to be used when estimating the dispersion model}
+\usage{
+filter.mu.pre(nb.data, x, mu.lower = 1, mu.upper = Inf, phi.pre = 0.1)
+}
+\arguments{
+  \item{nb}{}
+
+  \item{x}{}
+
+  \item{mu.lower}{}
+
+  \item{mu.upper}{}
+}
+\value{
+a logical vector specifyfing the subset of rows to be used
+when estimating the dispersion model
+}
+\description{
+Create a logical vector specifyfing the subset of rows to
+be used when estimating the dispersion model
+}
+

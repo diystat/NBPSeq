@@ -2,7 +2,8 @@
 \alias{make.disp}
 \title{(private) Specify a dispersion model}
 \usage{
-make.disp(nb, x, model, predictor = "pi", ...)
+make.disp(nb.data, x, model, predictor, subset = filter.mu.pre(nb.data, x),
+  ...)
 }
 \arguments{
   \item{nb}{NB data, output from
@@ -21,6 +22,8 @@ make.disp(nb, x, model, predictor = "pi", ...)
   estimated mean relative frequencies; \code{"mu"},
   preliminarily estimated mean frequencies; \code{"rs"},
   row sums.}
+
+  \item{subset}{a list of logical,}
 
   \item{...}{additional parameter to \code{disp.fun.*}}
 }

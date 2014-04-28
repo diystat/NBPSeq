@@ -2,7 +2,8 @@
 \alias{irls.nb}
 \title{(private) Estiamte the regression coefficients in an NB GLM model}
 \usage{
-irls.nb(y, s, x, phi, beta0, mustart = NULL, ..., print.level = 0)
+irls.nb(y, s, x, phi, beta0 = rep(NA, ncol(x)), mustart = NULL, ...,
+  print.level = 0)
 }
 \arguments{
   \item{y}{an m*n matrix of counts}

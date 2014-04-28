@@ -3,7 +3,7 @@
 \title{Estimate Negative Binomial Dispersion}
 \usage{
 estimate.dispersion(nb.data, x, model = "NBQ", predictor = "pi",
-  method = "MAPL", ...)
+  method = "MAPL", fast = TRUE, ...)
 }
 \arguments{
   \item{nb.data}{output from
@@ -15,11 +15,16 @@ estimate.dispersion(nb.data, x, model = "NBQ", predictor = "pi",
   \item{model}{the name of the dispersion model, one of
   "NB2", "NBP", "NBQ" (default), "NBS" or "step".}
 
+  \item{predictor}{}
+
   \item{method}{a character string specifying the method
   for estimating the dispersion model, one of "ML" or
   "MAPL" (default).}
 
-  \item{...}{(for future use).}
+  \item{fast}{use a faster (but might be less accurate
+  method)}
+
+  \item{...}{additional parameters to optim.fun.<method>}
 }
 \value{
 a list with following components:

@@ -105,7 +105,8 @@ nb.glm.test = function(counts, x, beta0,
 ##' \item{tags}{a matrix of gene tags, same as input.}
 prepare.nb.data = function(counts,
   lib.sizes=colSums(counts),
-  norm.factors=rep(1, dim(counts)[2]),
+  norm.factors=estimate.norm.factors(counts),
+  ## norm.factors=rep(1, dim(counts)[2]),
   tags=NULL
   ##tags =  matrix(row.names(counts), dim(counts)[1], 1)
   ) {
@@ -176,7 +177,6 @@ prepare.nb.data = function(counts,
 ##' @param predictor 
 ##' @param method a character string specifying the method for estimating the dispersion model, one of "ML" or "MAPL" (default).
 ##' @param fast use a faster (but might be less accurate method)
-##' @param make.disp.par  a list, additional parameter to \code{\list{make.disp}}
 ##' @param ... additional parameters to optim.fun.<method>
 ##' @return a list with following components:
 ##' \item{estimates}{dispersion estimates for each read count, a matrix of the same dimensions as
@@ -251,7 +251,7 @@ estimate.dispersion.by.group = function(nb.data,
 
     disp.fun = paste("disp.fun", tolower(model), sep=".");
 
-    par.list = c(list(disp.fun=disp.fun, grp.ids = grp.ids), disp.predictor.pi(nb.data, x));
+    par.list = c(list(disp.fun=disp.fun, grp.ids = grp.ids, subset=filter.mu.pre(nb.data,x)), disp.predictor.pi(nb.data, x));
 
     disp = do.call(disp.by.group, par.list);
  
@@ -288,13 +288,13 @@ estimate.dispersion.by.group = function(nb.data,
 plot.nb.dispersion = function(x, ...) {
 
   xlab = switch(x$model$predictor.label,
-      "pi.pre"="Preliminary Estiamtes of Mean Relative Frequencies",
-      "mu.pre"="Preliminary Estiamtes of Mean Frequencies",
+      "pi.pre"="Preliminarily Estimated Mean Relative Frequencies",
+      "mu.pre"="Preliminarily Estimated Mean Frequencies",
       "row sum"="Row Sums",
       x$model$predictor.label);
 
   matplot(x$model$predictor, x$estimates, log="xy", xlab=xlab,
-       ylab ="Estiamted Dispersion");
+       ylab ="Estimated Dispersion");
   invisible();
 }
 

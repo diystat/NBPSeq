@@ -10,7 +10,6 @@
 ##' @title Negative Binomial Regression Models for Statistical Analysis of RNA-Sequencing Data
 ##'
 ##' @useDynLib NBPSeq Cdqrls
-##' @importFrom qvalue qvalue
 ##' @importFrom splines ns
 ##' @exportPattern "^[^\\.]" 
 NULL
