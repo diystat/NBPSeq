@@ -50,7 +50,7 @@ fit.nb.glm.1 = function(y, s, x, phi, beta0=rep(NA, dim(x)[2]),
   res$phi =phi;
   
   ## Compute the log likelihod
-  res$l = ll.nb(kappa, mu, y);
+  res$l = l.nb(kappa, mu, y);
 
   v = drop(mu + phi * mu^2);
 
@@ -162,7 +162,7 @@ fit.nb.glm.1u = function(y, s, x, phi=NA, beta0=rep(NA, dim(x)[2]), kappa=1/phi,
   j.hat[1, 1] = -sum(trigamma(kappa.hat+y) - trigamma(kappa.hat) + 1/kappa.hat - 2/(kappa.hat+mu.hat) + (y+kappa.hat)/(mu.hat + kappa.hat)^2);
 
   ##  i.hat = t(x) %*% diag(mu.hat^2/v.hat) %*% x;
-  ## res$l = ll.nb(kappa.hat, mu = mu.hat, y);
+  ## res$l = l.nb(kappa.hat, mu = mu.hat, y);
 
   ## See whether Poisson model fits better
   ## l.poisson  = sum(dpois(y, lambda = mu.hat, log=TRUE));
@@ -175,7 +175,7 @@ fit.nb.glm.1u = function(y, s, x, phi=NA, beta0=rep(NA, dim(x)[2]), kappa=1/phi,
 
   res$phi = phi.hat
   res$kappa = kappa.hat;
-  res$l = ll.nb(kappa.hat, mu.hat, y);
+  res$l = l.nb(kappa.hat, mu.hat, y);
   res$j = j.hat
 
   res;

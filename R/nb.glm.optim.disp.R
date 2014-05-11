@@ -38,7 +38,7 @@ optim.disp.pl = function(disp, counts, eff.lib.sizes, x, method="L-BFGS-B",
         }
 
         ## Compute the negative log likelihood of the fitted model
-        - ll.nb(1/phi, mu.hat, y); 
+        - l.nb(1/phi, mu.hat, y); 
     }
 
 
@@ -115,7 +115,7 @@ optim.disp.apl = function(disp, counts, eff.lib.sizes, x, method="L-BFGS-B",
         }
 
         ## Compute the negative log likelihood of the fitted model
-        l.hat = ll.nb(1/phi, mu.hat, y);
+        l.hat = l.nb(1/phi, mu.hat, y);
 
         m = dim(mu.hat)[1];
         for (i in (1:m)) {

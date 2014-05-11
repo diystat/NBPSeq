@@ -1,0 +1,33 @@
+\name{log.phi.nbq}
+\alias{log.phi.nbq}
+\title{(private) A NBQ dispersion model}
+\usage{
+\method{log}{phi.nbq}(par, pi, pi.offset = 1e-04)
+}
+\arguments{
+  \item{par}{a vector of length 3, see Details.}
+
+  \item{pi}{a vector of length m, estimated mean relative
+  frequencies}
+
+  \item{pi.offset}{a number}
+}
+\value{
+a vector of length m, log dipserison.
+}
+\description{
+Specify a NBQ dispersion model. The parameters of the
+specified model are to be estimated from the data using the
+function \code{optim.pcl}.
+}
+\details{
+Under this NBQ model, the log dispersion is modeled as a
+quadratic function of the log mean realtive frequencies
+(\code{pi}):
+
+log(phi) = par[1] + par[2] * log(pi/pi.offset) + par[3] *
+(log(pi/pi.offset))^2;
+
+where the (default) value of \code{pi.offset} is 1e-4.
+}
+

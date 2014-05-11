@@ -16,16 +16,18 @@ irls.nb.1(y, s, x, phi, beta0 = rep(NA, p), mustart = NULL, maxit = 50,
   \item{phi}{a scalar or an n-vector of dispersion
   parameters}
 
-  \item{mustart}{starting values for the vector of means}
-
   \item{beta0}{a vector specifying known and unknown
   components of the regression coefficients: non-NA
   components are hypothesized values of beta, NA components
   are free components}
 
+  \item{mustart}{starting values for the vector of means}
+
   \item{maxit}{maximum number of iterations}
 
   \item{tol.mu}{a number, convergence criteria}
+
+  \item{tol}{a number, will be passed to Cdqrls}
 
   \item{print.level}{a number, print level}
 }
