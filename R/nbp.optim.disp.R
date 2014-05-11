@@ -48,7 +48,6 @@ log.phi.nbp=function(par, pi, pi.offset=1e-4){
 ##' where the (default) value of \code{pi.offset} is 1e-4.
 ##'
 ##' @title (private) A NBQ dispersion model
-##' @noRd
 ##'
 ##' @param par a vector of length 3, see Details.
 ##' @param pi a vector of length m, estimated mean relative frequencies

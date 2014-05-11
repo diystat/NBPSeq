@@ -32,22 +32,25 @@
 ##' @param s a scalar or an n vector of effective library sizes
 ##' @param x an n by p design matrix
 ##' @param phi a scalar or an n-vector of dispersion parameters
-##' @param mustart starting values for the vector of means
 ##' @param beta0 a vector specifying known and unknown components of
 ##' the regression coefficients: non-NA components are hypothesized
 ##' values of beta, NA components are free components
+##' @param mustart starting values for the vector of means
 ##' @param maxit maximum number of iterations 
 ##' @param tol.mu a number, convergence criteria
+##' @param tol a number, will be passed to Cdqrls
 ##' @param print.level a number, print level
 ##' @return a list of the following components:
 ##'  \item{beta}{a p-vector of estimated regression coefficients}
 ##'  \item{mu}{an n-vector of estimated mean values}
 ##'  \item{conv}{logical. Was the IRLS algorithm judged to have converged?}
 ##'  \item{zero}{logical. Was any of the fitted mean close to 0?}
-irls.nb.1 = function(y, s, x, phi, 
+irls.nb.1 = function(y, s, x, phi,
   beta0=rep(NA,p),
   mustart=NULL,
-  maxit=50, tol.mu=1e-3/length(y), print.level=0) {
+  maxit=50,
+  tol.mu=1e-3/length(y),
+  print.level=0) {
 
   nobs = as.integer(dim(x)[1]);
   p = as.integer(dim(x)[2]);
@@ -60,7 +63,8 @@ irls.nb.1 = function(y, s, x, phi,
 
   ## Offset
   beta = beta0;
-  offset = matrix(x[, id0], nobs, q) %*% beta[id0];
+  ## offset = matrix(x[, id0], nobs, q) %*% beta[id0];
+  offset = x[, id0, drop=FALSE] %*% beta[id0];
 
   ## Initial estiamte of beta
   ## eta = log((y+0.5)/s);
@@ -90,10 +94,8 @@ irls.nb.1 = function(y, s, x, phi,
     z = eta - offset + (y - mu)/mu;
     w = drop(mu/sqrt(varmu));
 
-    ## call Fortran code to perform weighted least square
-    epsilon = 1e-7;
-
     ## call Fortran code via C wrapper
+    epsilon = 1e-7;
     fit = .Call(Cdqrls, x[, id1, drop=FALSE] * w,  w * z, epsilon);
 
     ##    fit = .Fortran("dqrls",
