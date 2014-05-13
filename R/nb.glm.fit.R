@@ -181,3 +181,51 @@ fit.nb.glm.1u = function(y, s, x, phi=NA, beta0=rep(NA, dim(x)[2]), kappa=1/phi,
   res;
 }
 
+fit.nb.glm = function(nb.data, x, beta0=rep(NA, ncol(x)),
+  print.level=1) {
+
+  m = nrow(nb.data$counts);
+  n = ncol(nb.data$counts);
+  p = ncol(x);
+
+  res = list(mu = matrix(0, m, n),
+    beta = matrix(0, m, p),
+    phi = numeric(m),
+    l = numeric(m),
+    j = array(0, c(p+1, p+1, m))
+    );
+
+  ## obj = apply(nb.data$counts, 1, fit.nb.glm.1u, s = nb.data$eff.lib.sizes, x = x, beta0=beta0);
+  s = nb.data$eff.lib.sizes;
+
+  if (print.level > 0)
+    pb = txtProgressBar(style = 3);
+
+  for (i in 1:m) {
+    if (print.level > 0)
+      setTxtProgressBar(pb, i/m);
+
+    res1 =  fit.nb.glm.1u(nb.data$counts[i,], s, x, beta0=beta0);
+    res$mu[i,] = res1$mu;
+    res$beta[i,] = res1$beta;
+    res$phi[i] = res1$phi;
+    res$l[i] = res1$l;
+    res$j[,,i] = res1$j;
+  }
+
+  if (print.level>0)
+    close(pb);
+
+  class(res) = "nb.glm";
+
+  res
+}
+
+
+`[.nb.glm` = function(x, i, ..., drop=FALSE) {
+ list(mu = x$mu[i,,drop=drop],
+      beta = x$beta[i,,drop=drop],
+      phi = x$beta[i],
+      l = x$l[i],
+      j = x$j[,,i]);
+}
