@@ -12,3 +12,5 @@
 l.nb= function(kappa, mu, y) {
   sum(dnbinom(y, kappa, mu=mu, log=TRUE));
 }
+
+ll.nb = l.nb;
